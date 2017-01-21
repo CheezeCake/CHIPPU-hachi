@@ -22,10 +22,10 @@ uint8_t Memory::readUint8(addr_t address)
 
 uint16_t Memory::readUint16(addr_t address)
 {
-	return (mRam[address] << 8 | mRam[address + 1]);
+	return ((mRam[address] << 8) | mRam[address + 1]);
 }
 
 uint16_t Memory::readOpCode(addr_t address)
 {
-	return ((mRam[address] << 8) | mRam[address + 1]);
+	return readUint16(address);
 }
