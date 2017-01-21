@@ -14,6 +14,7 @@ namespace Chip8
 			virtual void display(const Display& display) = 0;
 			virtual void clearDisplay() = 0;
 			virtual void playBeep() = 0;
+			virtual void stopBeep() = 0;
 
 			virtual bool keyIsPressed(Key key) = 0;
 			virtual Key waitKey() = 0;

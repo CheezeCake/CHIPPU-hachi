@@ -27,8 +27,10 @@ void Timer::update(const std::chrono::milliseconds& delta)
 	else
 		mValue -= n;
 
-	if (mCallback && mValue != 0)
-		mCallback();
+	if (mNonZeroCallback && mValue != 0)
+		mNonZeroCallback();
+	else if (mZeroCallback && mValue == 0)
+		mZeroCallback();
 }
 
 uint8_t Timer::getValue()
@@ -43,5 +45,10 @@ void Timer::setValue(uint8_t value)
 
 void Timer::setNonZeroCallback(const std::function<void()>& callback)
 {
-	mCallback = callback;
+	mNonZeroCallback = callback;
+}
+
+void Timer::setZeroCallback(const std::function<void()>& callback)
+{
+	mZeroCallback = callback;
 }

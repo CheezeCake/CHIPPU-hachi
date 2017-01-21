@@ -2,8 +2,10 @@
 #define __SDL2_HPP__
 
 #include <map>
+#include <string>
 
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_mixer.h>
 
 #include <CHIP-8/Backend.hpp>
 
@@ -20,6 +22,7 @@ class SDL2 : public Chip8::Backend
 		virtual void display(const Chip8::Display& display) override;
 		virtual void clearDisplay() override;
 		virtual void playBeep() override;
+		virtual void stopBeep() override;
 
 		virtual std::chrono::milliseconds getTicks() override;
 		virtual void delay(const std::chrono::milliseconds& time) override;
@@ -31,8 +34,10 @@ class SDL2 : public Chip8::Backend
 			Chip8::Display::WIDTH * PIXELS_PER_CHIP8_PIXEL;
 		static const unsigned int SCREEN_HEIGHT =
 			Chip8::Display::HEIGHT * PIXELS_PER_CHIP8_PIXEL;
+		static const std::string BEEP_PATH;
 
 	private:
+		void initSound();
 		void colorPixel(Uint8* pixel, Uint32 color, Uint8 bpp);
 
 		SDL_Window* mWindow = nullptr;
@@ -40,6 +45,7 @@ class SDL2 : public Chip8::Backend
 
 		Uint32 mBlack = 0;
 		Uint32 mWhite = 0;
+		Mix_Music* mBeep = nullptr;
 
 		static const std::map<Chip8::Key, int> Chip8KeyToSDL;
 		static const std::map<Chip8::Key, int> Chip8KeyToSDLKeypad;

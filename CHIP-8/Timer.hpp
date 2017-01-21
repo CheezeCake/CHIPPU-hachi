@@ -17,12 +17,14 @@ namespace Chip8
 			uint8_t getValue();
 			void setValue(uint8_t value);
 			void setNonZeroCallback(const std::function<void()>& callback);
+			void setZeroCallback(const std::function<void()>& callback);
 
 			static const std::chrono::milliseconds resolution;
 
 		private:
 			uint8_t mValue;
-			std::function<void()> mCallback;
+			std::function<void()> mNonZeroCallback;
+			std::function<void()> mZeroCallback;
 	};
 }
 

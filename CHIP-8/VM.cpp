@@ -36,6 +36,7 @@ void VM::init()
 	srand(time(nullptr));
 
 	mSoundTimer.setNonZeroCallback([&] { mBackend.playBeep(); });
+	mSoundTimer.setZeroCallback([&] { mBackend.stopBeep(); });
 	mDisplay.clear();
 }
 

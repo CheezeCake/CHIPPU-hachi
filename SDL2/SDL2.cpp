@@ -66,9 +66,11 @@ const std::map<int, Key> SDL2::SDLToChip8Key= {
 	{ SDL_SCANCODE_F, Key::KEY_F }
 };
 
+const std::string SDL2::BEEP_PATH = "beep.mp3";
+
 SDL2::SDL2()
 {
-	if (SDL_Init(SDL_INIT_VIDEO) < 0)
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0)
 		throw std::runtime_error(SDL_GetError());
 
 	mWindow = SDL_CreateWindow("CHIPPU-hachi", SDL_WINDOWPOS_UNDEFINED,
@@ -82,6 +84,8 @@ SDL2::SDL2()
 	mWhite = SDL_MapRGB(mWindowSurface->format, 255, 255, 255);
 
 	SDL_SetEventFilter(&SDL2::eventFilter, nullptr);
+
+	initSound();
 }
 
 SDL2::~SDL2()
@@ -89,7 +93,30 @@ SDL2::~SDL2()
 	if (mWindow)
 		SDL_DestroyWindow(mWindow);
 
+	if (mBeep) {
+		Mix_HaltMusic();
+		Mix_FreeMusic(mBeep);
+		Mix_CloseAudio();
+	}
+
 	SDL_Quit();
+}
+
+void SDL2::initSound()
+{
+	if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096 ) != -1) {
+		if ((mBeep = Mix_LoadMUS(BEEP_PATH.c_str()))) {
+			Mix_PlayMusic(mBeep, -1);
+			Mix_PauseMusic();
+		}
+		else {
+			std::cerr << "failed to load " << BEEP_PATH << '\n';
+			Mix_CloseAudio();
+		}
+	}
+	else {
+		std::cerr << "failed to initialize SDL2_mixer: " << Mix_GetError() << '\n';
+	}
 }
 
 bool SDL2::quit()
@@ -195,7 +222,14 @@ void SDL2::clearDisplay()
 
 void SDL2::playBeep()
 {
-	std::cout << __func__ << '\n';
+	if (mBeep && Mix_PausedMusic())
+		Mix_ResumeMusic();
+}
+
+void SDL2::stopBeep()
+{
+	if (mBeep && !Mix_PausedMusic())
+		Mix_PauseMusic();
 }
 
 std::chrono::milliseconds SDL2::getTicks()
