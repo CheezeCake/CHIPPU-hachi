@@ -38,8 +38,8 @@ class SDL2 : public Chip8::Backend
 		SDL_Window* mWindow = nullptr;
 		SDL_Surface* mWindowSurface = nullptr;
 
-		Uint32 mBlack;
-		Uint32 mWhite;
+		Uint32 mBlack = 0;
+		Uint32 mWhite = 0;
 
 		static const std::map<Chip8::Key, int> Chip8KeyToSDL;
 		static const std::map<Chip8::Key, int> Chip8KeyToSDLKeypad;
