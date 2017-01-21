@@ -112,6 +112,7 @@ Key SDL2::waitKey()
 		}
 		else if (event.type == SDL_QUIT) {
 			SDL_PushEvent(&event);
+			return Key::KEY_NONE;
 		}
 	}
 
