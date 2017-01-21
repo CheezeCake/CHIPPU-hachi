@@ -241,6 +241,7 @@ void VM::handleFxOps(uint16_t opCode, uint8_t x)
 			break;
 		case 0x18:
 			mSoundTimer.setValue(mRegisters.V[x]);
+			break;
 		case 0x1e:
 			mRegisters.I += mRegisters.V[x];
 			mRegisters.V[0xf] = (mRegisters.I > 0xfff);
