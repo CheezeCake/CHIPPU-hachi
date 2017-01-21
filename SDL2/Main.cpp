@@ -6,13 +6,13 @@
 
 int main(int argc, char** argv)
 {
-	Chip8::SDL2 sys;
-	Chip8::VM vm(sys);
+	if (argc < 2) {
+		std::cerr << "usage: " << argv[0] << " game\n";
+		return 0;
+	}
 
-	if (argc > 1)
-		vm.loadProgram(argv[1]);
-	else
-		vm.loadProgram(std::cin);
+	Chip8::SDL2 sys;
+	Chip8::VM vm(sys, argv[1]);
 
 	vm.run();
 
