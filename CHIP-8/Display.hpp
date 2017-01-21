@@ -17,7 +17,7 @@ namespace Chip8
 			void clear();
 			bool getPixel(unsigned int x, unsigned int y) const;
 			// returns true if the pixel was flipped from set to unset, false otherwise
-			bool flipPixel(unsigned int x, unsigned int y);
+			bool xorPixel(unsigned int x, unsigned int y, bool newPixel);
 
 			void dump() const;
 

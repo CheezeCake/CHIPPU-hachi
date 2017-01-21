@@ -16,12 +16,12 @@ bool Display::getPixel(unsigned int x, unsigned int y) const
 	return mDisplay[y][x];
 }
 
-bool Display::flipPixel(unsigned int x, unsigned int y)
+bool Display::xorPixel(unsigned int x, unsigned int y, bool newPixel)
 {
-	bool set = mDisplay[y][x];
-	mDisplay[y][x] = !set;
+	const bool oldPixel = mDisplay[y][x];
+	mDisplay[y][x] = oldPixel ^ newPixel;
 
-	return set;
+	return (oldPixel && !mDisplay[y][x]);
 }
 
 void Display::dump() const

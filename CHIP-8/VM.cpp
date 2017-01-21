@@ -330,7 +330,7 @@ bool VM::execDraw(uint8_t x, uint8_t y, uint8_t n)
 				if (x_ < Display::WIDTH) {
 					const bool pixel = (sprite >> 7) & 1;
 
-					if (pixel && mDisplay.flipPixel(x_, y_))
+					if (mDisplay.xorPixel(x_, y_, pixel))
 						collision = true;
 
 					sprite <<= 1;
