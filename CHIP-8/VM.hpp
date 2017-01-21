@@ -24,9 +24,12 @@ namespace Chip8
 			static const unsigned int OPCODE_SIZE = 2;
 			static const std::chrono::milliseconds runningRate;
 
+			VM(Backend& backend);
 			VM(Backend& backend, std::istream& stream);
 			VM(Backend& backend, const std::string& filename);
 
+			void loadProgram(const std::string& filename);
+			void loadProgram(std::istream& stream);
 			void run();
 
 			class InvalidInstruction : public std::runtime_error
@@ -41,7 +44,6 @@ namespace Chip8
 			void init();
 
 			void runExec();
-			void loadProgram(std::istream& stream);
 			void previousInst();
 			void nextInst();
 			void handle8xyOps(uint16_t opCode, uint8_t x, uint8_t y, uint8_t LSHB);

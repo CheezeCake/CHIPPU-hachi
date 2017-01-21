@@ -13,31 +13,24 @@ using namespace Chip8;
 
 const std::chrono::milliseconds VM::runningRate(1000 / 840); // 840Hz
 
-VM::VM(Backend& backend, std::istream& stream) :
+VM::VM(Backend& backend) :
 	mBackend(backend)
-{
-	loadProgram(stream);
-	init();
-}
-
-VM::VM(Backend& backend, const std::string& filename) :
-	mBackend(backend)
-{
-	std::ifstream file(filename, std::ios::binary);
-	if (!file)
-		throw std::runtime_error("error opening file: " + filename);
-
-	loadProgram(file);
-	init();
-}
-
-void VM::init()
 {
 	srand(time(nullptr));
 
 	mSoundTimer.setNonZeroCallback([&] { mBackend.playBeep(); });
 	mSoundTimer.setZeroCallback([&] { mBackend.stopBeep(); });
 	mDisplay.clear();
+}
+
+VM::VM(Backend& backend, std::istream& stream) : VM(backend)
+{
+	loadProgram(stream);
+}
+
+VM::VM(Backend& backend, const std::string& filename) : VM(backend)
+{
+	loadProgram(filename);
 }
 
 void VM::previousInst()
@@ -48,6 +41,15 @@ void VM::previousInst()
 void VM::nextInst()
 {
 	mRegisters.pc += OPCODE_SIZE;
+}
+
+void VM::loadProgram(const std::string& filename)
+{
+	std::ifstream file(filename, std::ios::binary);
+	if (!file)
+		throw std::runtime_error("error opening file: " + filename);
+
+	loadProgram(file);
 }
 
 void VM::loadProgram(std::istream& stream)
