@@ -6,7 +6,7 @@
 
 int main(int argc, char** argv)
 {
-	SDL2 sys;
+	Chip8::SDL2 sys;
 	Chip8::VM vm(sys);
 
 	if (argc > 1)
