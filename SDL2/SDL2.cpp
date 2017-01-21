@@ -111,7 +111,7 @@ void SDL2::initSound()
 		}
 		else {
 			std::cerr << "failed to load " << BEEP_PATH << '\n';
-			Mix_CloseAudio();
+			/* Mix_CloseAudio(); */
 		}
 	}
 	else {
