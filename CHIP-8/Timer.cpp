@@ -4,7 +4,7 @@
 
 using namespace Chip8;
 
-const std::chrono::milliseconds Timer::resolution(1000/60); // 60Hz
+const std::chrono::milliseconds Timer::resolution(1000 / 60); // 60Hz
 
 Timer::Timer() : Timer(0)
 {
