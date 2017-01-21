@@ -29,9 +29,6 @@ namespace Chip8
 
 			void run();
 
-			static bool platformIsLittleEndian();
-			static void swapBytes(uint16_t& v);
-
 			class InvalidInstruction : public std::runtime_error
 			{
 				public:
