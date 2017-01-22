@@ -30,6 +30,7 @@ namespace Chip8
 
 		private:
 			std::array<uint8_t, MEMORY_SIZE> mRam = {
+				{
 				// 0
 				0b11110000,
 				0b10010000,
@@ -126,6 +127,7 @@ namespace Chip8
 				0b11110000,
 				0b10000000,
 				0b10000000
+				}
 			};
 	};
 }
