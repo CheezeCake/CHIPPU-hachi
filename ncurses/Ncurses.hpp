@@ -27,8 +27,8 @@ namespace Chip8
 			virtual void delay(const std::chrono::milliseconds& time) override;
 
 		private:
-			const std::map<Key, int> Chip8KeyToNcurses;
-			const std::map<int, Key> NcursesToChip8Key;
+			static const std::map<Key, int> Chip8KeyToNcurses;
+			static const std::map<int, Key> NcursesToChip8Key;
 
 			bool mPlayBeep = false;
 			Chip8::Clock mClock;

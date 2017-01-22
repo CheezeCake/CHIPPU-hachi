@@ -7,7 +7,7 @@
 
 using namespace Chip8;
 
-const std::map<Key, int> Chip8KeyToNcurses = {
+const std::map<Key, int> Ncurses::Chip8KeyToNcurses = {
 	{ Key::KEY_0, '0' },
 	{ Key::KEY_1, '1' },
 	{ Key::KEY_2, '2' },
@@ -26,7 +26,7 @@ const std::map<Key, int> Chip8KeyToNcurses = {
 	{ Key::KEY_F, 'f' }
 };
 
-const std::map<int, Key> NcursesToChip8Key = {
+const std::map<int, Key> Ncurses::NcursesToChip8Key = {
 	{ '0', Key::KEY_0 },
 	{ '1', Key::KEY_1 },
 	{ '2', Key::KEY_2 },
