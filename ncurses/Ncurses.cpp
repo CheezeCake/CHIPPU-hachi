@@ -51,9 +51,6 @@ Ncurses::Ncurses()
 	cbreak();
 	noecho();
 	curs_set(0);
-
-	attrset(A_REVERSE);
-	mvaddch(10, 10, ' ');
 }
 
 Ncurses::~Ncurses()
