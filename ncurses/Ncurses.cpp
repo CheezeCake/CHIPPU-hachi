@@ -51,6 +51,7 @@ Ncurses::Ncurses()
 	cbreak();
 	noecho();
 	curs_set(0);
+	nodelay(stdscr, TRUE);
 }
 
 Ncurses::~Ncurses()
@@ -60,19 +61,23 @@ Ncurses::~Ncurses()
 
 bool Ncurses::keyIsPressed(Chip8::Key key)
 {
-	nodelay(stdscr, TRUE);
 	const int ch = wgetch(stdscr);
-	nodelay(stdscr, FALSE);
 
-	return (ch != ERR && Chip8KeyToNcurses.count(key) != ch);
+	return (ch != ERR &&
+			Chip8KeyToNcurses.count(key) != 0 &&
+			Chip8KeyToNcurses.at(key) == ch);
 }
 
 Key Ncurses::waitKey()
 {
+	nodelay(stdscr, FALSE);
+
 	while (true) {
 		const int ch = wgetch(stdscr);
-		if (NcursesToChip8Key.count(ch) != 0)
+		if (NcursesToChip8Key.count(ch) != 0) {
+			nodelay(stdscr, TRUE);
 			return NcursesToChip8Key.at(ch);
+		}
 	}
 }
 
@@ -86,12 +91,15 @@ bool Ncurses::quit()
 
 void Ncurses::display(const Display& display)
 {
-	for (auto i = 0; i < Display::WIDTH; ++i) {
-		for (auto j = 0; j < Display::HEIGHT; ++j) {
+	for (unsigned int i = 0; i < Display::WIDTH; ++i) {
+		for (unsigned int j = 0; j < Display::HEIGHT; ++j) {
 			attrset((display.getPixel(i, j)) ? A_REVERSE : A_NORMAL);
-			mvaddch(j, i, ' ');
+			mvaddch(j, i * 2, ' ');
+			mvaddch(j, i * 2 + 1, ' ');
 		}
 	}
+
+	refresh();
 }
 
 void Ncurses::clearDisplay()
