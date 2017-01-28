@@ -94,8 +94,9 @@ void Ncurses::display(const Display& display)
 	for (unsigned int i = 0; i < Display::WIDTH; ++i) {
 		for (unsigned int j = 0; j < Display::HEIGHT; ++j) {
 			attrset((display.getPixel(i, j)) ? A_REVERSE : A_NORMAL);
-			mvaddch(j, i * 2, ' ');
-			mvaddch(j, i * 2 + 1, ' ');
+			mvaddch(j, i, ' ');
+			/* mvaddch(j, i * 2, ' '); */
+			/* mvaddch(j, i * 2 + 1, ' '); */
 		}
 	}
 
